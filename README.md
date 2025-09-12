@@ -84,10 +84,7 @@ As a production planner, how can we assign each worker to each day and shift to:
 
 ### Parameters
 - $D_{jk}$ is the labor demand in day j at shift k  
-$ft_i = \{  
-1$ nếu nhân viên $i$ là full-time  
-$0$ nếu nhân viên $i$ là part-time  
-$\}$
+- $ft_i = 1$ nếu nhân viên $i$ là full-time, $0$ otherwise
 
 
 ### Decision variable
