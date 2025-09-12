@@ -84,11 +84,11 @@ As a production planner, how can we assign each worker to each day and shift to:
 
 ### Parameters
 - $D_{jk}$ is the labor demand in day j at shift k  
-- $ft_i = 1$ nếu nhân viên $i$ là full-time, $0$ otherwise
+- $ft_i = 1$ if worker $i$ is full-time, $0$ otherwise
 
 
 ### Decision variable
-- $x_{ijk}$ is the binary decision variable on assigning labor i to day j at shift k, $x_{ijk} = \{0, 1\}$
+- $x_{ijk} = 1$ if worker $i$ works on day $j$ at shift $k$, $0$ otherwise
 
 ### Constraints
 
