@@ -83,7 +83,7 @@ As a production planner, how can we assign each worker to each day and shift to:
 - K is the set of each shift within a day, $K = \{1, 2, 3\}$
 
 ### Parameters
-- $D_{jk}$ is the labor demand in day j at shift k
+- $D_{jk}$ is the labor demand in day j at shift k  
 $ft_i = \begin{cases} 
 1 & \text{nếu nhân viên $i$ là full-time} \\ 
 0 & \text{nếu nhân viên $i$ là part-time} 
