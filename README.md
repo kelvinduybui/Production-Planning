@@ -106,3 +106,4 @@ As a production planner, how can we assign each worker to each day and shift to:
 $\min \sum_{i=1}^{100} \sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk}$
 ---
 
+## 4️⃣ Solution Approach
