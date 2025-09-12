@@ -91,15 +91,16 @@ As a production planner, how can we assign each worker to each day and shift to:
 
 ### Constraints
 - For each shift $k$ in each day $j$, the number of laborers assigned must fulfill the demand:  
-  $\sum_{i=1}^{100} x_{ijk} \geq D_{jk}, \forall j \in J$, \forall k \in K$  
+  $\sum_{i=1}^{100} x_{ijk} \geq D_{jk} \; \forall j \in J, \forall k \in K$  
 - For each worker $i$ in each day $j$, the maximum number of shifts he/she can work is 1:  
   $\sum_{k=1}^{3} x_{ijk} \leq 1, \; \forall i \in I, \forall j \in J$  
 - For each worker $i$, the maximum number of shifts he/she can work is 5 if full-time, 3 if part-time:  
-  $\sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk} \leq 5 \cdot ft_i + 3 \cdot (1-ft_i), \; \forall i \in I$  
+  $\sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk} \leq 5 \cdot ft_i + 3 \cdot (1 - ft_i), \; \forall i \in I$  
 - For each worker $i$, in two consecutive days $j$ and $j+1$: if he/she works on the evening shift ($k = 3$) on day $j$, he/she cannot work on the morning shift ($k = 1$) on day $j+1$:  
   $x_{ij3} + x_{i(j+1)1} \leq 1, \; \forall i \in I, \forall j \in J$  
 - For each worker $i$, the maximum number of evening shifts ($k = 3$) he/she can work in a week is 2:  
   $\sum_{j=1}^{7} x_{ij3} \leq 2, \; \forall i \in I$  
+
 
 ### Objective function
 - Minimizing the total workforce assigned:  
