@@ -91,7 +91,7 @@ As a production planner, how can we assign each worker to each day and shift to:
 
 ### Constraints
 - For each shift $k$ in each day $j$, the number of laborers assigned must fulfill the demand:  
-  $\sum_{i=1}^{100} x_{ijk} \geq D_{jk}, \forall j \in J$,  \; \forall k \in K  
+  $\sum_{i=1}^{100} x_{ijk} \geq D_{jk}, \forall j \in J$, \forall k \in K$  
 - For each worker $i$ in each day $j$, the maximum number of shifts he/she can work is 1:  
   $\sum_{k=1}^{3} x_{ijk} \leq 1, \; \forall i \in I, \forall j \in J$  
 - For each worker $i$, the maximum number of shifts he/she can work is 5 if full-time, 3 if part-time:  
