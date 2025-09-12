@@ -17,7 +17,7 @@
 ## 1️⃣ Context  
 
 📘 **Main Context**
-- The company operates with **100 workers** across **7 days** and **3 shifts per day**.
+- The company operates with **80 workers** across **7 days** and **3 shifts per day**.
 - **Manual scheduling in Excel** is currently used, which is time-consuming, error-prone & inflexible when workforce demand changes.  
 - A faster, systematic, and logic-driven **optimization method** is required to ensure efficiency in planning, fairness in workload distribution, and compliance with labor policies.  
 
@@ -49,17 +49,17 @@ Develop an **optimized scheduling approach** that:
 
 | **Day** | **Morning** | **Afternoon** | **Evening** |
 |---------|-------------|---------------|-------------|
-| Mon     | 25          | 21            | 17          |
-| Tue     | 24          | 23            | 18          |
-| Wed     | 27          | 21            | 19          |
-| Thu     | 24          | 23            | 18          |
-| Fri     | 25          | 22            | 17          |
-| Sat     | 27          | 23            | 20          |
-| Sun     | 23          | 23            | 19          |
+| Mon     | 18          | 15            | 10          |
+| Tue     | 20          | 20            | 10          |
+| Wed     | 24          | 20            | 16          |
+| Thu     | 16          | 14            | 10          |
+| Fri     | 18          | 17            | 10          |
+| Sat     | 25          | 24            | 12          |
+| Sun     | 22          | 25            | 13          |
 
 ### 👥 Workforce
-- **Total Employees**: 100  
-  - **Full-time (FT)**: 80 workers  
+- **Total Employees**: 80  
+  - **Full-time (FT)**: 60 workers  
     - ≤ 5 workdays per week (at least 2 days off)  
   - **Part-time (PT)**: 20 workers  
     - ≤ 3 workdays per week  
@@ -78,7 +78,7 @@ As a production planner, how can we assign each worker to each day and shift to:
 
 ## 3️ Model Formulation
 ### Set
-- I is the set of the factory workforce, $I = \{1, 2, 3, \dots, 100\}$
+- I is the set of the factory workforce, $I = \{1, 2, 3, \dots, 80\}$
 - J is the set of weekday, $J = \{1, 2, 3, \dots, 7\}$
 - K is the set of each shift within a day, $K = \{1, 2, 3\}$
 
@@ -91,7 +91,7 @@ As a production planner, how can we assign each worker to each day and shift to:
 
 ### Constraints
 - For each shift $k$ in each day $j$, the number of laborers assigned must fulfill the demand:  
-  $\sum_{i=1}^{100} x_{ijk} \geq D_{jk} \; \forall j \in J, \forall k \in K$  
+  $\sum_{i=1}^{80} x_{ijk} \geq D_{jk} \; \forall j \in J, \forall k \in K$  
 - For each worker $i$ in each day $j$, the maximum number of shifts he/she can work is 1:  
   $\sum_{k=1}^{3} x_{ijk} \leq 1 \; \forall i \in I, \forall j \in J$  
 - For each worker $i$, the maximum number of shifts he/she can work is 5 if full-time, 3 if part-time:  
@@ -104,7 +104,7 @@ As a production planner, how can we assign each worker to each day and shift to:
 
 ### Objective function
 - Minimizing the total workforce assigned:  
-$\min \sum_{i=1}^{100} \sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk}$
+$\min \sum_{i=1}^{80} \sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk}$
 ---
 
 ## 4️⃣ Solution Approach
