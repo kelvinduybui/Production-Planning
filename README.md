@@ -101,5 +101,8 @@ As a production planner, how can we assign each worker to each day and shift to:
 - For each worker $i$, the maximum number of evening shifts ($k = 3$) he/she can work in a week is 2:  
   $\sum_{j=1}^{7} x_{ij3} \leq 2, \; \forall i \in I$  
 
+### Objective function
+- Minimizing the total workforce assigned:  
+$\min \sum_{i=1}^{100} \sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk}$
 ---
 
