@@ -66,11 +66,24 @@ Develop an **optimized scheduling approach** that:
 
 ### ⚖️ Scheduling Rules
 - Each worker can work **one shift per day** only  
-- If a worker works **Evening (E)** on day *d*, they **cannot** work **Morning (M)** on day *d+1*  
+- If a worker works **Evening (E)** on day *j*, they **cannot** work **Morning (M)** on day *j+1*  
 - No worker may be assigned more than **2 Evening (E) shifts per week**  
 
-### Key Question:
-As a production planner, how can we assign each laborer to each day and each shift to minimize the cost, satisfy the demand, but still follow the rights?
+### Objective
+As a production planner, how can we assign each worker to each day and shift to: 
+- Minimise costs.
+- Satisfy the workforce demand every day and every shift.
+- Respect labor rights and contract types.
+- Balance workload across workers.
 
-# 3️ Model Formulation
+## 3️ Model Formulation
+### Set
+- I is the set of the factory workforce, $I = \{1, 2, 3, \dots, 100\}$
+- J is the set of weekday, $J = \{1, 2, 3, \dots, 7\}$
+- K is the set of each shift within a day, $K = \{1, 2, 3\}$
 
+### Parameters
+- $D_{jk}$ is the labor demand in day j at shift k
+
+### Decision variable
+- $x_{ijk}$ is the binary decision variable on assigning labor i to day j at shift k, $x_{ijk} = \{0, 1\}$
