@@ -108,3 +108,15 @@ $\min \sum_{i=1}^{80} \sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk}$
 ---
 
 ## 4️⃣ Solution Approach
+### Install & call Gurobi
+Install the Gurobi optimizer, activate the license, and import the gurobipy package in Python to build and solve optimization models.
+
+```python
+# Install gurobipy library
+!pip install gurobipy
+# Call gurobipy library
+import gurobipy as gp
+
+# Call pandas library
+import pandas as pd
+```
