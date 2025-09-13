@@ -1,4 +1,4 @@
-# Production-Planning
+# Production Workforce Planning for a Production Company | Python
 
 **Author:** Bùi Xuân Bảo Duy (Kelvin)  
 **Date:** September 2025  
