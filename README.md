@@ -9,8 +9,6 @@
 2️⃣ [Problem Description & Parameters](#problem-description--parameters)  
 3️⃣ [Model Formulation](#model-formulation)  
 4️⃣ [Solution Approach](#solution-approach)  
-5️⃣ [Visualization](#visualization)  
-6️⃣ [Insights & Recommendations](#insights--recommendations)  
 
 ---
 
@@ -108,15 +106,80 @@ $\min \sum_{i=1}^{80} \sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk}$
 ---
 
 ## 4️⃣ Solution Approach
-### Install & call Gurobi
+### Install & call Gurobi  
 Install the Gurobi optimizer, activate the license, and import the gurobipy package in Python to build and solve optimization models.
 
 ```python
 # Install gurobipy library
 !pip install gurobipy
+
 # Call gurobipy library
 import gurobipy as gp
 
 # Call pandas library
 import pandas as pd
 ```
+
+### Setup sets and parameters  
+Define the sets (workers, days, shifts) and input parameters (workforce demand, contract type, max working days, shift limits) that describe the scheduling problem.  
+```python
+# Sets
+I = 80 # Set of workforce (Labor 1, Labor 2, ..., Labor 80) (80 workers)
+J = 7 # Set of weekday (Monday, Tuesday, ..., Sunday) (1 week 7 days)
+K = 3 # Set of shift (Morning, Afternoon, Evening) (1 day 3 shift)
+
+# Parameters
+demand = [
+    [18, 15, 10],  # Monday   = 43
+    [20, 20, 10],  # Tuesday  = 50
+    [24, 20, 16],  # Wednesday= 60
+    [16, 14, 10],  # Thursday = 40
+    [18, 17, 10],  # Friday   = 45
+    [25, 24, 12],  # Saturday = 61
+    [22, 25, 13]   # Sunday   = 60
+]
+
+ft = [1]*60 + [0]*20  # 80 workers with 60 full-time, 20 part-time)
+```
+### Setup models
+Initialize a Gurobi optimization model, specify decision variables, and prepare the framework for adding constraints and the objective function.  
+
+```python
+# Create a gurobipy model
+model = gp.Model("production_planning")
+
+# Decision variable
+x = model.addVars(I, J, K, vtype=gp.GRB.BINARY, name="Assigning staff i to day j at shift k")
+
+# Objective function
+model.setObjective(gp.quicksum(x[i, j, k] for i in range(I) for j in range(J) for k in range(K)), gp.GRB.MINIMIZE)
+
+# Constraints
+
+# Cons 1
+model.addConstrs((gp.quicksum(x[i, j, k] for i in range(I)) >= demand[j][k] for j in range(J) for k in range(K)), name="demand fulfill")
+
+# Cons 2
+model.addConstrs((gp.quicksum(x[i, j, k] for k in range(K)) <= 1 for i in range(I) for j in range(J)), name="max 1 shift a day")
+
+# Cons 3
+model.addConstrs((gp.quicksum(x[i, j, k] for j in range(J) for k in range(K)) <= 5*ft[i] + 3*(1-ft[i]) for i in range(I)), name="5 days for full-time & 3 days for part-time")
+
+# Cons 4
+model.addConstrs((x[i, j, 2] + x[i, j+1, 0] <= 1 for i in range(I) for j in range(J-1)), name="if work on shift 3 today then no work on shift 1 tomorrow") #Bc Python starts from 0,1,2,...
+
+# Cons 5
+model.addConstrs((gp.quicksum(x[i, j, 2] for j in range(J)) <= 2 for i in range(I)), name="max 2 night shifts")
+```
+
+### Optimize model  
+Run the Gurobi solver to process the defined model, find the optimal staff assignment, and generate solution outputs.  
+
+```python
+# Optimize model
+model.optimize()
+```
+
+### Result
+Extract and display the optimized staff assignment, showing how workers are scheduled across days and shifts while meeting all constraints.
+![Image](https://github.com/kelvinduybui/Production-Planning/blob/main/Images/Production%20Planning%20result.png?raw=true)
