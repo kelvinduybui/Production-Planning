@@ -1,4 +1,4 @@
-# Production Workforce Planning for a Production Company | Python
+# Production Shift & Workforce Planning for a Manufacturing Company | Python
 
 **Author:** Bùi Xuân Bảo Duy (Kelvin)  
 **Date:** September 2025  
