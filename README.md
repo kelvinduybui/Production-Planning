@@ -75,32 +75,63 @@ As a production planner, how can we assign each worker to each day and shift to:
 - Balance workload across workers.
 
 ## 3️ Model Formulation
+This part is presented in both business & technical language  
 ### Set
+#### Business:  
+- List of employees (80 people), 7 days in a week, and 3 shifts per day
+
+#### Technical:  
 - I is the set of the factory workforce, $I = \{1, 2, 3, \dots, 80\}$
 - J is the set of weekday, $J = \{1, 2, 3, \dots, 7\}$
 - K is the set of each shift within a day, $K = \{1, 2, 3\}$
 
 ### Parameters
+#### Business:  
+- Workforce demand for each shift and day
+- Type of contract (full-time or part-time).
+
+#### Technical:  
 - $D_{jk}$ is the labor demand in day j at shift k  
-- $ft_i = 1$ if worker $i$ is full-time, $0$ otherwise  
+- $ft_i = 1$ if worker $i$ is full-time, = $0$ if part-time  
 
 ### Decision variable
-- $x_{ijk} = 1$ if worker $i$ works on day $j$ at shift $k$, $0$ otherwise  
+#### Business:  
+- $x_{ijk} = 1$ if worker $i$ works on day $j$ at shift $k$, $0$ otherwise
+
+#### Technical:  
+- \(x_{ijk} \in \{0,1\}, \; \forall i \in I, j \in J, k \in K\)
 
 ### Constraints
+#### Business:  
+- Each shift must have enough workers according to demand.
+#### Technical:  
 - For each shift $k$ in each day $j$, the number of laborers assigned must fulfill the demand:  
-  $\sum_{i=1}^{80} x_{ijk} \geq D_{jk} \; \forall j \in J, \forall k \in K$  
+  $\sum_{i=1}^{80} x_{ijk} \geq D_{jk} \; \forall j \in J, \forall k \in K$
+#### Business:  
+- Each employee can work at most 1 shift per day.
+#### Technical:  
 - For each worker $i$ in each day $j$, the maximum number of shifts he/she can work is 1:  
-  $\sum_{k=1}^{3} x_{ijk} \leq 1 \; \forall i \in I, \forall j \in J$  
+  $\sum_{k=1}^{3} x_{ijk} \leq 1 \; \forall i \in I, \forall j \in J$
+#### Business:  
+- Full-time employees can work at most 5 shifts per week; part-time at most 3 shifts per week.
+#### Technical:  
 - For each worker $i$, the maximum number of shifts he/she can work is 5 if full-time, 3 if part-time:  
-  $\sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk} \leq 5 \cdot ft_i + 3 \cdot (1 - ft_i) \; \forall i \in I$  
+  $\sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk} \leq 5 \cdot ft_i + 3 \cdot (1 - ft_i) \; \forall i \in I$
+#### Business:  
+- Business: If an employee works the night shift today, they cannot work the morning shift the next day.
+#### Technical:  
 - For each worker $i$, in two consecutive days $j$ and $j+1$: if he/she works on the evening shift ($k = 3$) on day $j$, he/she cannot work on the morning shift ($k = 1$) on day $j+1$:  
-  $x_{ij3} + x_{i(j+1)1} \leq 1 \; \forall i \in I, \forall j \in J$  
+  $x_{ij3} + x_{i(j+1)1} \leq 1 \; \forall i \in I, \forall j \in J$
+#### Business:  
+- Each employee can work at most 2 night shifts in a week.
+#### Technical:  
 - For each worker $i$, the maximum number of evening shifts ($k = 3$) he/she can work in a week is 2:  
   $\sum_{j=1}^{7} x_{ij3} \leq 2 \; \forall i \in I$  
 
-
-### Objective function
+### Objective function  
+#### Business:  
+- Minimize the total number of assigned shifts, optimize workforce usage.
+#### Technical:  
 - Minimizing the total workforce assigned:  
 $\min \sum_{i=1}^{80} \sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk}$
 ---
