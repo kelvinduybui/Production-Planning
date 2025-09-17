@@ -99,7 +99,7 @@ This part is presented in both business & technical language
 - $x_{ijk} = 1$ if worker $i$ works on day $j$ at shift $k$, $0$ otherwise
 
 #### Technical:  
-- \(x_{ijk} \in \{0,1\}, \; \forall i \in I, j \in J, k \in K\)
+- $x_{ijk} \in \{0,1\}, \; \forall i \in I, j \in J, k \in K
 
 ### Constraints
 #### Business:  
