@@ -67,7 +67,7 @@ Develop an **optimized scheduling approach** that:
 - If a worker works **Evening (E)** on day *j*, they **cannot** work **Morning (M)** on day *j+1*  
 - No worker may be assigned more than **2 Evening (E) shifts per week**  
 
-### Objective
+### 🎯 Objective
 As a production planner, how can we assign each worker to each day and shift to: 
 - Minimise costs.
 - Satisfy the workforce demand every day and every shift.
@@ -76,75 +76,80 @@ As a production planner, how can we assign each worker to each day and shift to:
 
 ## 3️ Model Formulation
 This part is presented in both business & technical language  
-### Set
-#### Business:  
+### 📦 Set
+#### 💼 Business:  
 - List of employees (80 people), 7 days in a week, and 3 shifts per day
 
-#### Technical:  
+#### ⚙️ Technical:  
 - I is the set of the factory workforce, $I = \{1, 2, 3, \dots, 80\}$
 - J is the set of weekday, $J = \{1, 2, 3, \dots, 7\}$
 - K is the set of each shift within a day, $K = \{1, 2, 3\}$
 
-### Parameters
-#### Business:  
+### 📊 Parameters
+#### 💼 Business:  
 - Workforce demand for each shift and day
 - Type of contract (full-time or part-time).
 
-#### Technical:  
+#### ⚙️ Technical:  
 - $D_{jk}$ is the labor demand in day j at shift k  
 - $ft_i = 1$ if worker $i$ is full-time, = $0$ if part-time  
 
-### Decision variable
-#### Business:  
+### 🎯 Decision variable
+#### 💼 Business:  
 - $x_{ijk} = 1$ if worker $i$ works on day $j$ at shift $k$, $0$ otherwise
 
-#### Technical:  
+#### ⚙️ Technical:  
 - $x_{ijk} \in \{0,1\}, \; \forall i \in I, j \in J, k \in K$
 
-### Constraints ❶  
-#### Business:  
+### 📐 Constraints ❶  
+#### 💼 Business:  
 - Each shift must have enough workers according to demand.
-#### Technical:  
+#### ⚙️ Technical:  
 - For each shift $k$ in each day $j$, the number of laborers assigned must fulfill the demand:  
   $\sum_{i=1}^{80} x_{ijk} \geq D_{jk} \; \forall j \in J, \forall k \in K$
 
-### Constraints ❷  
-#### Business:  
+### 📐 Constraints ❷  
+#### 💼 Business:  
 - Each employee can work at most 1 shift per day.
-#### Technical:  
+#### ⚙️ Technical:  
 - For each worker $i$ in each day $j$, the maximum number of shifts he/she can work is 1:  
   $\sum_{k=1}^{3} x_{ijk} \leq 1 \; \forall i \in I, \forall j \in J$
 
-### Constraints ❸  
-#### Business:  
+### 📐 Constraints ❸  
+#### 💼 Business:  
 - Full-time employees can work at most 5 shifts per week; part-time at most 3 shifts per week.
-#### Technical:  
+#### ⚙️ Technical:  
 - For each worker $i$, the maximum number of shifts he/she can work is 5 if full-time, 3 if part-time:  
   $\sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk} \leq 5 \cdot ft_i + 3 \cdot (1 - ft_i) \; \forall i \in I$
 
-### Constraints ❹  
-#### Business:  
+### 📐 Constraints ❹  
+#### 💼 Business:  
 - Business: If an employee works the night shift today, they cannot work the morning shift the next day.
-#### Technical:  
+#### ⚙️ Technical:  
 - For each worker $i$, in two consecutive days $j$ and $j+1$: if he/she works on the evening shift ($k = 3$) on day $j$, he/she cannot work on the morning shift ($k = 1$) on day $j+1$:  
   $x_{ij3} + x_{i(j+1)1} \leq 1 \; \forall i \in I, \forall j \in J$
 
-### Constraints ❺  
-#### Business:  
+### 📐 Constraints ❺  
+#### 💼 Business:  
 - Each employee can work at most 2 night shifts in a week.
-#### Technical:  
+#### ⚙️ Technical:  
 - For each worker $i$, the maximum number of evening shifts ($k = 3$) he/she can work in a week is 2:  
   $\sum_{j=1}^{7} x_{ij3} \leq 2 \; \forall i \in I$  
 
-### Objective function  
-#### Business:  
+### 🚀 Objective Function  
+#### 💼 Business:  
 - Minimize the total number of assigned shifts, optimize workforce usage.
-#### Technical:  
+#### ⚙️ Technical:  
 - Minimizing the total workforce assigned:  
 $\min \sum_{i=1}^{80} \sum_{j=1}^{7} \sum_{k=1}^{3} x_{ijk}$
 ---
 
 ## 4️⃣ Solution Approach
+### ❓ Why Gurobi  
+- **Powerful Optimization Engine** – Gurobi is one of the most powerful solvers for **Mixed-Integer Programming (MIP)**, capable of handling problems with **thousands of variables and constraints** quickly and optimally.
+- **Business Meaning** – Using Gurobi allows the company to **automate workforce scheduling**, **reduce manual errors** in Excel, and ensure production plans are efficient, fair, and compliant with labor regulations.
+- **Modeling Support in Python** – With the gurobipy library, it is easy to **build mathematical models** (sets, parameters, variables, constraints, objective), enabling the solver to generate an **optimal work schedule** that satisfies real-world constraints.
+
 ### Install & call Gurobi  
 Install the Gurobi optimizer, activate the license, and import the gurobipy package in Python to build and solve optimization models.
 
